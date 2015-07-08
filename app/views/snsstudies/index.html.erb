@@ -1,0 +1,29 @@
+<h1>Listing snsstudies</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Introduction</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @snsstudies.each do |snsstudy| %>
+      <tr>
+        <td><%= snsstudy.name %></td>
+        <td><%= snsstudy.introduction %></td>
+        <td><%= link_to 'Show', snsstudy %></td>
+        <td><%= link_to 'Edit', edit_snsstudy_path(snsstudy) %></td>
+        <td><%= link_to 'Destroy', snsstudy, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Snsstudy', new_snsstudy_path %>
