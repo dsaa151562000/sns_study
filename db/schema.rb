@@ -11,14 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150708062055) do
-
-  create_table "sns", force: true do |t|
-    t.string   "user_name"
-    t.text     "user_introduction"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 20150715163325) do
 
   create_table "snsstudies", force: true do |t|
     t.string   "name"
