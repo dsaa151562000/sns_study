@@ -10,5 +10,20 @@
   <%= @snsstudy.introduction %>
 </p>
 
+<div class="stats">
+
+    <strong id="following" class="stat">
+      <%= @snsstudy.followed_users.count %>
+    </strong>
+    following
+  </a>
+  <a href="<%= followers_user_path(@snsstudy) %>">
+    <strong id="followers" class="stat">
+      <%= @snsstudy.followers.count %>
+    </strong>
+    followers
+  </a>
+</div>
+
 <%= link_to 'Edit', edit_snsstudy_path(@snsstudy) %> |
 <%= link_to 'Back', snsstudies_path %>

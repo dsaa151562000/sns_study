@@ -10,11 +10,14 @@ class SnsstudiesController < ApplicationController
   # GET /snsstudies/1
   # GET /snsstudies/1.json
   def show
+
+
   end
 
   # GET /snsstudies/new
   def new
     @snsstudy = Snsstudy.new
+
   end
 
   # GET /snsstudies/1/edit
