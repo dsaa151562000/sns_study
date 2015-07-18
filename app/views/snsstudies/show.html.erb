@@ -10,14 +10,19 @@
   <%= @snsstudy.introduction %>
 </p>
 
+
+
+
 <div class="stats">
 
     <strong id="following" class="stat">
       <%= @snsstudy.followed_users.count %>
     </strong>
+
+
     following
   </a>
-  <a href="<%= followers_user_path(@snsstudy) %>">
+
     <strong id="followers" class="stat">
       <%= @snsstudy.followers.count %>
     </strong>
@@ -25,5 +30,40 @@
   </a>
 </div>
 
+
+
+<br>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Introduction</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @snsstudies.each do |snsstudy| %>
+      <tr>
+        <td><%= snsstudy.name %></td>
+        <td>OTHER ID=<%= snsstudy.id %></td>
+        <td>MY ID=<%= @snsstudy.id %></td>
+
+        <td>
+        <!-- build　自分のIDをrelationshipsのfollower_idに　　-->
+         <%= form_for(@snsstudy.relationships.build(followed_id: snsstudy.id)) do |f| %>
+         <div><%= f.hidden_field :followed_id %></div>
+         <%= f.submit "Follow", class: "btn btn-large btn-primary" %>
+         <% end %></td>
+
+         <td>
+            <%= form_for(@snsstudy.relationships.find_by(followed_id: snsstudy.id),html: { method: :delete }) do |f| %>
+        <%= f.submit "Unfollow", class: "btn btn-large" %>
+         <% end %>
+         </td>
+
+    <% end %>
 <%= link_to 'Edit', edit_snsstudy_path(@snsstudy) %> |
 <%= link_to 'Back', snsstudies_path %>
