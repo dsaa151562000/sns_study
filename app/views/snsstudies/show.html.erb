@@ -30,6 +30,43 @@
   </a>
 </div>
 
+<!--<p><%= debug(@snsstudy.relationships.inspect) %></p>
+<p>
+<% @relation.each do |rel| %>
+<%= rel.follower_id %>
+<% end %>
+</p>
+<%= debug(@relation.inspect) %>
+
+
+<p>
+<% if @snsstudy.id == "1" then %>
+自分ではありません。
+<% else %>
+自分<%= @snsstudy.id %>です。
+<% end %>
+</p>
+
+
+<% writers = ['1', '2', '3'] %>
+<p>
+<% writers.each do |writer| %>
+<% if writer == "1" then %>
+自分ではありません。
+<% else %>
+<%= writer %>さん。
+<% end %>
+<% end %>
+</p>
+
+<% writers = ['1', '2', '3'] %>
+<p>
+<% writers.each do |writer| %>
+<% if writer != "1" then %>
+<%= writer %>さん。
+<% end %>
+<% end %>
+</p>-->
 
 
 <br>
@@ -46,6 +83,8 @@
 
   <tbody>
     <% @snsstudies.each do |snsstudy| %>
+
+      <% if snsstudy.id != @snsstudy.id then %>
       <tr>
         <td><%= snsstudy.name %></td>
         <td>OTHER ID=<%= snsstudy.id %></td>
@@ -55,15 +94,21 @@
         <!-- build　自分のIDをrelationshipsのfollower_idに　　-->
          <%= form_for(@snsstudy.relationships.build(followed_id: snsstudy.id)) do |f| %>
          <div><%= f.hidden_field :followed_id %></div>
+         <div><input id="snsstudy_id" name="snsstudy[id]" value="<%= @snsstudy.id %>"  type="hidden" /></div>
+         <div><input id="follower_id" name="relationships[follower_id]" value="<%= @snsstudy.id %>"  type="hidden" /></div>
+         <div><input id="followed_id" name="relationships[followed_id]" value="<%= snsstudy.id %>"  type="hidden" /></div>
          <%= f.submit "Follow", class: "btn btn-large btn-primary" %>
          <% end %></td>
 
          <td>
-            <%= form_for(@snsstudy.relationships.find_by(followed_id: snsstudy.id),html: { method: :delete }) do |f| %>
-        <%= f.submit "Unfollow", class: "btn btn-large" %>
-         <% end %>
-         </td>
+         
 
+         </td>
+      </tr>
+      <% end %>
+      
     <% end %>
+  </tbody>
+</table>
 <%= link_to 'Edit', edit_snsstudy_path(@snsstudy) %> |
 <%= link_to 'Back', snsstudies_path %>
