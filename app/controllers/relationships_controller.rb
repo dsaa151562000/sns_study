@@ -1,10 +1,12 @@
 class RelationshipsController < ApplicationController
 
   def create
-    #@user2 = Snsstudy.find(params[:snsstudy][:id])
+    @user2 = Snsstudy.find(params[:snsstudy][:id])
+
   	@user = Snsstudy.find(params[:relationship][:followed_id])
-   @post = Relationship.new(relationships_params)
-    @post.save
+   #@post = Relationship.new(relationships_params)
+   # @post.save
+
     #redirect_to @post
 
     #@snsstudy = Snsstudy.new(snsstudy_params)
@@ -12,8 +14,8 @@ class RelationshipsController < ApplicationController
   	#@user2 = Snsstudy.find(params[:id])
     
 
-    #@snsstudy.follow!(@user)
-  	redirect_to @user
+    @user2.follow!(@user)
+  	redirect_to @user2
   end
 
 
