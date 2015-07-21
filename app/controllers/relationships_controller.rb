@@ -20,9 +20,13 @@ class RelationshipsController < ApplicationController
 
 
   def destroy
+    @user2 = Snsstudy.find(params[:snsstudy][:id])
+
     @user = Relationship.find(params[:id]).followed
-    @current_user.unfollow!(@user)
-    redirect_to @user
+    
+    @user2.unfollow!(@user)
+
+    redirect_to @user2
   end
 
   private

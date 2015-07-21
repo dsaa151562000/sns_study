@@ -91,19 +91,26 @@
         <td>MY ID=<%= @snsstudy.id %></td>
 
         <td>
-        <!-- build　自分のIDをrelationshipsのfollower_idに　　action="/relationships" -->
-         <%= form_for(@snsstudy.relationships.build(followed_id: snsstudy.id)) do |f| %>
-         <div><%= f.hidden_field :followed_id %></div> <!--relationship[followed_id] type="hidden" value="2"-->
-         <div><input id="snsstudy_id" name="snsstudy[id]" value="<%= @snsstudy.id %>"  type="hidden" /></div>
+　　　　　　　<% if @snsstudy.following?(snsstudy) %>
+    　　　　　<!--==フォローしてる フォロー解除ボタン ==-->
+　　　　　　　　　　<%= form_for(@snsstudy.relationships.find_by(followed_id: snsstudy.id),html: { method: :delete }) do |f| %>
+　　　　　　　　　　<input id="snsstudy_id" name="snsstudy[id]" value="<%= @snsstudy.id %>"  type="hidden" />
+　　　　　　　　　　<%= f.submit "Unfollow", class: "btn btn-large" %>
+　　　　　　　　　　<% end %>
+　　　　　　<% else %>
+        　　<!--==フォローしていない フォローボタン ==-->
+       　 　<!-- build　自分のIDをrelationshipsのfollower_idに　　action="/relationships" -->
+         　<%= form_for(@snsstudy.relationships.build(followed_id: snsstudy.id)) do |f| %>
+         　<div><%= f.hidden_field :followed_id %></div> <!--relationship[followed_id] type="hidden" value="2"-->
+        　 <input id="snsstudy_id" name="snsstudy[id]" value="<%= @snsstudy.id %>"  type="hidden" />
           <!--
-         <div><input id="follower_id" name="relationships[follower_id]" value="<%= @snsstudy.id %>"  type="hidden" /></div>
-         <div><input id="followed_id" name="relationships[followed_id]" value="<%= snsstudy.id %>"  type="hidden" /></div>
-         -->
-         <%= f.submit "Follow", class: "btn btn-large btn-primary" %>
-         <% end %></td>
-
-         <td>
-         
+         　<div><input id="follower_id" name="relationships[follower_id]" value="<%= @snsstudy.id %>"  type="hidden" /></div>
+         　<div><input id="followed_id" name="relationships[followed_id]" value="<%= snsstudy.id %>"  type="hidden" /></div>
+         　-->
+        　 <%= f.submit "Follow", class: "btn btn-large btn-primary" %>
+         　<% end %>
+        　　<!--== フォローボタン END==-->
+　　　　　　　<% end %>
 
          </td>
       </tr>
