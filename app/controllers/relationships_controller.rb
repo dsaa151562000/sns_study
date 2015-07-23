@@ -4,15 +4,6 @@ class RelationshipsController < ApplicationController
     @user2 = Snsstudy.find(params[:snsstudy][:id])
 
   	@user = Snsstudy.find(params[:relationship][:followed_id])
-   #@post = Relationship.new(relationships_params)
-   # @post.save
-
-    #redirect_to @post
-
-    #@snsstudy = Snsstudy.new(snsstudy_params)
-    #@user2= params.require(:snsstudy).permit(:id)
-  	#@user2 = Snsstudy.find(params[:id])
-    
 
     @user2.follow!(@user)
   	redirect_to @user2
@@ -23,7 +14,7 @@ class RelationshipsController < ApplicationController
     @user2 = Snsstudy.find(params[:snsstudy][:id])
 
     @user = Relationship.find(params[:id]).followed
-    
+
     @user2.unfollow!(@user)
 
     redirect_to @user2
@@ -40,8 +31,7 @@ class RelationshipsController < ApplicationController
       params.require(:snsstudy).permit(:id)
     end
 
-
-def relationships_params
-params.require(:relationships).permit(:follower_id, :followed_id)
-end
+    def relationships_params
+     params.require(:relationships).permit(:follower_id, :followed_id)
+    end
 end
