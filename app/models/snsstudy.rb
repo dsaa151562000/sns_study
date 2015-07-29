@@ -1,4 +1,5 @@
 class Snsstudy < ActiveRecord::Base
+ before_create :create_remember_token
 
 #relationshipsのfollower_idを使用するのでforeign_keyで明示する　 follower_id=snsstudies_id
  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
@@ -16,7 +17,16 @@ class Snsstudy < ActiveRecord::Base
  has_many :followers, through: :reverse_relationships, source: :follower
 
 
+ has_secure_password
 
+
+ def Snsstudy.new_remember_token
+    SecureRandom.urlsafe_base64
+ end
+
+ def Snsstudy.encrypt(token)
+    Digest::SHA1.hexdigest(token.to_s)
+ end
 #フォローする相手のユーザーがデータベース上に存在するかどうかをチェック
  def following?(other_user)
     #relationships.exists?(followed_id: other_user.id)
@@ -34,5 +44,10 @@ class Snsstudy < ActiveRecord::Base
 #フォローを削除
  def unfollow!(other_user)
     relationships.find_by(followed_id: other_user.id).destroy
+ end
+
+ private
+ def create_remember_token
+   self.remember_token = Snsstudy.encrypt(Snsstudy.new_remember_token)
  end
 end
