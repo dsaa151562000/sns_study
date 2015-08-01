@@ -31,9 +31,10 @@ class SnsstudiesController < ApplicationController
 
     respond_to do |format|
       if @snsstudy.save
-        #sign_in(user)　引数に現在の@snsstudy
+        #sign_in(user)　引数に現在の@snsstudy  新しいユーザーを作成したらセッションも作成
         sign_in @snsstudy
         flash[:success] = "Welcome to the Sample App!"
+        
         format.html { redirect_to @snsstudy, notice: 'Snsstudy was successfully created.' }
         format.json { render action: 'show', status: :created, location: @snsstudy }
       else

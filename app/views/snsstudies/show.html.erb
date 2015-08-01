@@ -1,5 +1,16 @@
 <p id="notice"><%= notice %></p>
 
+<!--<%= debug current_user %>-->
+<div
+ <% if signed_in? %>
+            <p><%= current_user.name %>さんが現在サインインしています</p>
+            <%= link_to "Sign out", signout_path, method: "delete" %>
+          <% else %>
+            <p>現在サインアウトしました</p>
+ <% end %>
+</div>
+
+
 <p>
   <strong>Name:</strong>
   <%= @snsstudy.name %>

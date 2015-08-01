@@ -11,7 +11,10 @@ SnsStudy::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'snsstudies#index'
+  #root 'snsstudies#index'
+
+  root 'sessions#new'
+
   match '/signup',  to: 'snsstudies#new',            via: 'get'
   match '/signin',  to: 'sessions#new',         via: 'get'
   match '/signout', to: 'sessions#destroy',     via: 'delete'
