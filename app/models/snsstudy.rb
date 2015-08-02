@@ -20,13 +20,16 @@ class Snsstudy < ActiveRecord::Base
  has_secure_password
 
 
+#SecureRandomで衝突しないユニークな文字列を生成する
  def Snsstudy.new_remember_token
     SecureRandom.urlsafe_base64
  end
 
+#生成した文字列をSHA1で暗号化
  def Snsstudy.encrypt(token)
     Digest::SHA1.hexdigest(token.to_s)
  end
+
 #フォローする相手のユーザーがデータベース上に存在するかどうかをチェック
  def following?(other_user)
     #relationships.exists?(followed_id: other_user.id)
@@ -36,7 +39,6 @@ class Snsstudy < ActiveRecord::Base
 #self.relationships.create!
 #「フォローする」のリレーションシップを作成します。
  def follow!(other_user)
-
 	#relationshipsにレコードをcreate followed_idは引数
     relationships.create!(followed_id: other_user.id)
  end

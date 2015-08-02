@@ -1,14 +1,20 @@
 <p id="notice"><%= notice %></p>
 
+<!--<%= debug current_user?(@snsstudy) %>-->
 <!--<%= debug current_user %>-->
-<div
+<div>
  <% if signed_in? %>
             <p><%= current_user.name %>さんが現在サインインしています</p>
+            
+            <% if current_user?(@snsstudy) %>
             <%= link_to "Sign out", signout_path, method: "delete" %>
+            <% end %>
+
           <% else %>
-            <p>現在サインアウトしました</p>
+          <p>現在サインアウトしました</p>
  <% end %>
 </div>
+
 
 
 <p>
@@ -38,53 +44,35 @@
 
 
 <br>
-<table>
-  <thead>
-    <tr>
-      <th>他のユーザー</th>
-      <th></th>
-    </tr>
-  </thead>
 
-  <tbody>
-    <% @snsstudies.each do |snsstudy| %>
+<!--=========================================================================-->
 
-      <% if snsstudy.id != @snsstudy.id then %>
-      <tr>
-        <td><%= snsstudy.name %>さん</td>
-        <!--<td>OTHER ID=<%= snsstudy.id %></td>-->
-        <!--<td>MY ID=<%= @snsstudy.id %></td>-->
+<% unless current_user?(@snsstudy) %>
+  <div>
+  <% if current_user.following?(@snsstudy) %>
 
-        <td>
-         　<% if @snsstudy.following?(snsstudy) %>
-    　　　　　<!--==フォローしてる フォロー解除ボタン ==-->
-　　　　　　　　　　<%= form_for(@snsstudy.relationships.find_by(followed_id: snsstudy.id),html: { method: :delete }) do |f| %>
-　　　　　　　　　　<!--<input id="snsstudy_id" name="snsstudy[id]" value="<%= @snsstudy.id %>"  type="hidden" />-->
-　　　　　　　　　　<%= hidden_field_tag "snsstudy[id]", @snsstudy.id %>
-　　　　　　　　　　<%= f.submit "フォロー解除", class: "btn btn-large" %>
-　　　　　　　　　　<% end %>
-          <% else %>
-           <!--==フォローしていない フォローボタン ==-->
-           <!-- build　自分のIDをrelationshipsのfollower_idに　　action="/relationships" -->
-           <%= form_for(@snsstudy.relationships.build(followed_id: snsstudy.id)) do |f| %>
-           <!-- ==== ネストしたルーティング /snsstudy/1/relationships ====  -->
-         　<%= f.hidden_field :followed_id %><!--relationship[followed_id] type="hidden" value="2"-->
-          <!--<input id="snsstudy_id" name="snsstudy[id]" value="<%= @snsstudy.id %>"  type="hidden" />-->
-          <%= hidden_field_tag "snsstudy[id]", @snsstudy.id %>
-          <%= f.submit "フォローする", class: "btn btn-large" %>
-         　<% end %>
-         　<!--== フォローボタン END==-->
-          <% end %>
-         </td>
-      </tr>
-      <% end %>
-      
+    <%= @snsstudy.name %>さんをフォロー解除
+    <%= form_for(current_user.relationships.find_by(followed_id: @snsstudy.id),html: { method: :delete }) do |f| %>
+    <%= hidden_field_tag "snsstudy[id]", current_user.id %>
+    <%= f.submit "フォロー解除", class: "btn btn-large" %>
     <% end %>
-  </tbody>
-</table>
 
+  <% else %>
 
+    <%= @snsstudy.name %>さんをフォローする
+    <%= form_for(current_user.relationships.build(followed_id: @snsstudy.id)) do |f| %>
+    <!-- ==== ネストしたルーティング /snsstudy/1/relationships ====  -->
+    <%= f.hidden_field :followed_id %><!--relationship[followed_id] type="hidden" value="2"-->
+    <%= hidden_field_tag "snsstudy[id]", current_user.id %>
+    <%= f.submit "フォローする", class: "btn btn-large" %>
+    <% end %>
 
+  <% end %>
+  </div>
+<% end %>
+<!--=========================================================================-->
+
+<br>
 
 <%= link_to 'Edit', edit_snsstudy_path(@snsstudy) %> |
 <%= link_to 'Back', snsstudies_path %>
