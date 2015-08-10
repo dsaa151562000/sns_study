@@ -1,5 +1,6 @@
 class Snsstudy < ActiveRecord::Base
  before_create :create_remember_token
+ has_many :tsubyakis, dependent: :destroy
 
 #relationshipsのfollower_idを使用するのでforeign_keyで明示する　 follower_id=snsstudies_id
  has_many :relationships, foreign_key: "follower_id", dependent: :destroy
@@ -24,6 +25,7 @@ class Snsstudy < ActiveRecord::Base
  def Snsstudy.new_remember_token
     SecureRandom.urlsafe_base64
  end
+
 
 #生成した文字列をSHA1で暗号化
  def Snsstudy.encrypt(token)

@@ -74,5 +74,29 @@
 
 <br>
 
+
+<div>
+  <% if @snsstudy.tsubyakis.any? %>
+    <h3>つぶやき (<%= @snsstudy.tsubyakis.count %>)</h3>
+
+
+  <ul>
+  <!--<%= debug @tsubyakis %>-->
+
+      <% @tsubyakis.each do |tsubyakis| %>
+      <li>
+        <span><%= tsubyakis.content %></span>
+      </li>
+    <% end %>
+
+
+  </ul>
+<%= will_paginate @tsubyakis %>
+  <% end %>
+
+</div>
+
+
+
 <%= link_to 'Edit', edit_snsstudy_path(@snsstudy) %> |
 <%= link_to 'Back', snsstudies_path %>

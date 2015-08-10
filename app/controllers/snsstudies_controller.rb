@@ -1,5 +1,7 @@
 class SnsstudiesController < ApplicationController
   before_action :set_snsstudy, only: [:show, :edit, :update, :destroy]
+  before_action :signed_in_user,only: [:index, :edit, :update]
+  before_action :correct_user,   only: [:edit, :update]
 
   # GET /snsstudies
   # GET /snsstudies.json
@@ -10,14 +12,17 @@ class SnsstudiesController < ApplicationController
   # GET /snsstudies/1
   # GET /snsstudies/1.json
   def show
-  @snsstudies = Snsstudy.all
-  @relation=Relationship.all
+   @snsstudies = Snsstudy.all
+   @relation=Relationship.all
+   @snsstudy = Snsstudy.find(params[:id])
+   @tsubyakis = @snsstudy.tsubyakis.paginate(page: params[:page])
+
+
   end
 
   # GET /snsstudies/new
   def new
    @snsstudy = Snsstudy.new
-   
   end
 
   # GET /snsstudies/1/edit
@@ -78,5 +83,11 @@ class SnsstudiesController < ApplicationController
     def snsstudy_params
       #params.require(:snsstudy).permit(:name, :introduction)
       params.require(:snsstudy).permit(:name, :introduction, :email, :password, :password_confirmation)
+    end
+
+    # Before filters
+    def correct_user
+      @user = Snsstudy.find(params[:id])
+      redirect_to(root_url) unless current_user?(@user)
     end
 end

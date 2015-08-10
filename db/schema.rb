@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150727163013) do
+ActiveRecord::Schema.define(version: 20150808154946) do
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
@@ -33,5 +33,12 @@ ActiveRecord::Schema.define(version: 20150727163013) do
   end
 
   add_index "snsstudies", ["remember_token"], name: "index_snsstudies_on_remember_token"
+
+  create_table "tsubyakis", force: true do |t|
+    t.string   "content"
+    t.integer  "snsstudy_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

@@ -21,7 +21,7 @@ end
     @current_user = user
  end
 
- #getter的な
+ #getter的な....　(||=)定義されてなければ Snsstudy.find_byで探して代入
  def current_user
     #cookiesのremember_token文字列をencryptしremember_tokenへ代入
     remember_token = Snsstudy.encrypt(cookies[:remember_token])
@@ -29,15 +29,36 @@ end
     @current_user ||= Snsstudy.find_by(remember_token: remember_token)
  end
 
- #このuserはcurrent_user?　true of falseを返す
+ #この(user)はcurrent_userと等しいか？　true of falseを返す
  def current_user?(user)
     user == current_user
  end
 
- #current_userの
+ #cookieのremember_tokenデリートしcurrent_userをnilにする
  def sign_out
     current_user.update_attribute(:remember_token,Snsstudy.encrypt(Snsstudy.new_remember_token))
     cookies.delete(:remember_token)
     self.current_user = nil
  end
+
+ #signed_in?がfalseならばリダイレクトさせる
+ def signed_in_user
+  unless signed_in?
+  redirect_to signin_url, notice: "サインインしてください"
+  end
+ end
+
+#====フレンドリーフォーワーディング===================
+#session[:return_to]へ代入されているurlへリダイレクト。 リダイレクトしたらsessionを削除
+ def redirect_back_or(default)
+   redirect_to(session[:return_to] || default)
+   session.delete(:return_to)
+ end
+#session[:return_to]にrequest.urlを保存　アクセスしようとしていたurl
+ def store_location
+    session[:return_to] = request.url
+ end
+
+  
+
 end
