@@ -1,43 +1,38 @@
 class TsubyakisController < ApplicationController
 
-
-  # GET /microposts
-  # GET /microposts.json
+before_action :signed_in_user, only: [:create, :destroy]
+ 
   def index
 
   end
 
-  # GET /microposts/1
-  # GET /microposts/1.json
-  def show
-  end
 
-  # GET /microposts/new
-  def new
-
-  end
-
-  # GET /microposts/1/edit
-  def edit
-  end
-
-  # POST /microposts
-  # POST /microposts.json
   def create
+  #buildでオブジェクト化
+  @tsubyaki = current_user.tsubyakis.build(tsubyaki_params)
+  #@tsubyaki.save
+  #redirect_to snsstudies_path
+  @user2 = Snsstudy.find(params[:snsstudy][:id])
+
+  if @tsubyaki.save
+      flash[:success] = "つぶやきが投稿されました"
+      redirect_to @user2
+  else
+    flash[:error] = "何かつぶやいてください！"
+    redirect_to @user2
+  end
 
   end
 
-  # PATCH/PUT /microposts/1
-  # PATCH/PUT /microposts/1.json
-  def update
 
-  end
-
-  # DELETE /microposts/1
-  # DELETE /microposts/1.json
   def destroy
 
   end
 
+private
+
+    def tsubyaki_params
+      params.require(:tsubyaki).permit(:content)
+    end
 
 end

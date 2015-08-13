@@ -30,18 +30,30 @@
 
 
 
-<div class="stats">
-    <strong id="following" class="stat">
-      <%= @snsstudy.followed_users.count %>
-    </strong>
-    following
+<ul>
+    <li>
+    フォローしている<%= @snsstudy.followed_users.count %>人
+    </li>
+    
+    <li>
+    フォローワー<%= @snsstudy.followers.count %>人
+    </li>
+    
+</ul>
 
-    <strong id="followers" class="stat">
-      <%= @snsstudy.followers.count %>
-    </strong>
-    followers
-</div>
+<br>
 
+<% if signed_in? %>
+  <%= form_for(@tsubyaki) do |f| %>
+  <%= hidden_field_tag "snsstudy[id]", current_user.id %>
+  <div class="field">
+    <%= f.text_area :content, placeholder: "新しいつぶやき..." %>
+  </div>
+  <%= f.submit "つぶやき", class: "btn btn-large btn-primary" %>
+<% end %>
+<% else %>
+
+<% end %>
 
 <br>
 

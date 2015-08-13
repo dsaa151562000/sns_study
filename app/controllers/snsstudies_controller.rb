@@ -17,6 +17,8 @@ class SnsstudiesController < ApplicationController
    @snsstudy = Snsstudy.find(params[:id])
    @tsubyakis = @snsstudy.tsubyakis.paginate(page: params[:page])
 
+   #tsubyakiのオブジェクト化
+   @tsubyaki = current_user.tsubyakis.build if signed_in?
 
   end
 
