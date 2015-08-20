@@ -1,5 +1,6 @@
 <p id="notice"><%= notice %></p>
 
+
 <!--<%= debug current_user?(@snsstudy) %>-->
 <!--<%= debug current_user %>-->
 <div>
@@ -14,6 +15,7 @@
           <p>現在サインアウトしました</p>
  <% end %>
 </div>
+
 
 
 
@@ -43,7 +45,8 @@
 
 <br>
 
-<% if signed_in? %>
+<!--current_user? サインインしているユーザーなら -->
+<% if current_user?(@snsstudy) %>
   <%= form_for(@tsubyaki) do |f| %>
   <%= hidden_field_tag "snsstudy[id]", current_user.id %>
   <div class="field">
@@ -86,17 +89,20 @@
 
 <br>
 
-
+<!--=========つぶやき================================================================-->
 <div>
   <% if @snsstudy.tsubyakis.any? %>
-    <h3>つぶやき (<%= @snsstudy.tsubyakis.count %>)</h3>
+    <h3>つぶやき (<%= @tsubyaki_items.count %>)</h3>
 
 
   <ul>
-  <!--<%= debug @tsubyakis %>-->
+  <!--<%= debug @tsubyaki_items %>-->
 
-      <% @tsubyakis.each do |tsubyakis| %>
+      <% @tsubyaki_items.each do |tsubyakis| %>
+
+
       <li>
+       <span><%= tsubyakis.snsstudy.name %></span>
         <span><%= tsubyakis.content %></span>
       </li>
     <% end %>
@@ -107,7 +113,7 @@
   <% end %>
 
 </div>
-
+<!--=========================================================================-->
 
 
 <%= link_to 'Edit', edit_snsstudy_path(@snsstudy) %> |

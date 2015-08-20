@@ -17,9 +17,17 @@ class SnsstudiesController < ApplicationController
    @snsstudy = Snsstudy.find(params[:id])
    @tsubyakis = @snsstudy.tsubyakis.paginate(page: params[:page])
 
-   #tsubyakiのオブジェクト化
-   @tsubyaki = current_user.tsubyakis.build if signed_in?
 
+
+   #tsubyakiをbuildでオブジェクト化
+   #@tsubyaki = current_user.tsubyakis.build if signed_in?
+
+    if signed_in?
+      @tsubyaki = current_user.tsubyakis.build
+      @tsubyaki_items = current_user.tsubyaki_matome.paginate(page: params[:page])
+    end
+
+   
   end
 
   # GET /snsstudies/new

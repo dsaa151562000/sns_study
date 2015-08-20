@@ -18,8 +18,14 @@ class Snsstudy < ActiveRecord::Base
  has_many :followers, through: :reverse_relationships, source: :follower
 
 
+
+
  has_secure_password
 
+#自分自身とフォーローした人のつぶやき
+ def tsubyaki_matome
+    Tsubyaki.from_users_followed_by(self)
+ end
 
 #SecureRandomで衝突しないユニークな文字列を生成する
  def Snsstudy.new_remember_token
@@ -50,11 +56,17 @@ class Snsstudy < ActiveRecord::Base
     relationships.find_by(followed_id: other_user.id).destroy
  end
 
+ def feed
+   Tsubyaki.where("user_id = ?", id)
+ end
+
  private
  #remenber_tokenにselfを指定しないとremenber_tokenという名前のローカル変数を作成してしまう。selfを指定することによって、
  #Snsstudyオブジェクトのremember_tokenに値がセットされ、ユーザー保存時に他の属性と一緒にデータベースに書き込まれる。
 
  def create_remember_token
    self.remember_token = Snsstudy.encrypt(Snsstudy.new_remember_token)
+
+   #p self.remember_token
  end
 end
