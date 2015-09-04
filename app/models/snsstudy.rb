@@ -17,6 +17,8 @@ class Snsstudy < ActiveRecord::Base
 #sourceキーを省略してもよい :followers属性の場合、Railsが “followers” を単数形にして自動的に外部キーfollower_idを探して
  has_many :followers, through: :reverse_relationships, source: :follower
 
+ has_many :messages, dependent: :destroy
+
 
 
 

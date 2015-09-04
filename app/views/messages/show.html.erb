@@ -1,0 +1,18 @@
+<p><%= current_user.name %>さんが現在サインインしています</p>
+ <p><%= current_user.id %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @snsstudy.name %>さんのメッセージボードです。
+</p>
+
+
+ <ul>
+  <!--<%= debug @tsubyaki_items %>-->
+      <% @mess.each do |mess| %>
+      <li>
+      <span><%= mess.name %></span>
+        <span><%= mess.messe %></span>
+      </li>
+      <% end %>
+  </ul>

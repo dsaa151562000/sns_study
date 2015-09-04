@@ -14,6 +14,7 @@ class SnsstudiesController < ApplicationController
   def show
    @snsstudies = Snsstudy.all
    @relation=Relationship.all
+   #:idのユーザー(/snsstudies/2など。。)を@snsstudyに　
    @snsstudy = Snsstudy.find(params[:id])
    @tsubyakis = @snsstudy.tsubyakis.paginate(page: params[:page])
 

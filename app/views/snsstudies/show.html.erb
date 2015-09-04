@@ -93,21 +93,14 @@
 <div>
   <% if @snsstudy.tsubyakis.any? %>
     <h3>つぶやき (<%= @tsubyaki_items.count %>)</h3>
-
-
   <ul>
   <!--<%= debug @tsubyaki_items %>-->
-
       <% @tsubyaki_items.each do |tsubyakis| %>
-
-
       <li>
        <span><%= tsubyakis.snsstudy.name %></span>
         <span><%= tsubyakis.content %></span>
       </li>
-    <% end %>
-
-
+      <% end %>
   </ul>
 <%= will_paginate @tsubyakis %>
   <% end %>

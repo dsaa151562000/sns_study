@@ -41,7 +41,8 @@ end
     self.current_user = nil
  end
 
- #signed_in?がfalseならばリダイレクトさせる
+ #signed_in?がfalseならばリダイレクトさせる  SnsstudiesControllerの before_action :signed_in_user,only: [:index, :edit, :update]
+ #signin_url   match '/signin',  to: 'sessions#new',     http://localhost:3000/signin
  def signed_in_user
   unless signed_in?
   store_location

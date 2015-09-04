@@ -13,5 +13,6 @@ class Tsubyaki < ActiveRecord::Base
     followed_user_ids = "SELECT followed_id FROM relationships WHERE follower_id = :snsstudy_id"
     where("snsstudy_id IN (#{followed_user_ids}) OR snsstudy_id = :snsstudy_id",snsstudy_id: user.id)
     #tsubyakisのsnsstudy_idに自分のid user.idとフォローしているid followed_id FROM relationships WHERE follower_id
+    #User.first.followed_users.map(&:id) = User.first.followed_user_ids
   end
 end

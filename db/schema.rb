@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150808154946) do
+ActiveRecord::Schema.define(version: 20150830074131) do
+
+  create_table "messages", force: true do |t|
+    t.string   "messe"
+    t.integer  "snsstudy_id"
+    t.integer  "to_snsstudy_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "messages", ["snsstudy_id", "created_at"], name: "index_messages_on_snsstudy_id_and_created_at"
 
   create_table "relationships", force: true do |t|
     t.integer  "follower_id"
